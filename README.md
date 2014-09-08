@@ -1,13 +1,13 @@
 # Getting Familiar with Spring Boot
 
-Spring provides plenty of getting started guides at https://spring.io/guides/ . If there is some specific technology that
-you would like to explore, or if you find yourself idling, find a guide of your choice and follow the instructions there.
-There are several references to different parts of the reference documentation in this lab, however if you miss some 
-information you can find it online at http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/  
+Spring provides plenty of getting started guides at https://spring.io/guides/ . If there is some specific problem that 
+you would like to explore, pick a guide of your choice and follow the instructions there. In this lab, there are several 
+references to different parts of the reference documentation, however if you miss some information you can find it 
+online at http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/  
 
 ## Create a project
 
-- Go to the __Spring Initializr__ page: http://start.spring.io/
+- Go to the **Spring Initializr** page: http://start.spring.io/
   - Fill in the text fields according to your preference.
   - Set `Type` to be `Maven Project`.
   - Set `Packaging` to `jar`
@@ -20,12 +20,12 @@ information you can find it online at http://docs.spring.io/spring-boot/docs/1.1
   - Open the project in your favorite IDE.
   - Look at the generated `pom.xml` file.
     
-**Question:** 
+**Questions:** 
 - What dependencies are used?
 - How is version management handled?
 
 
-There are three ways to execute your application:
+There are (at least) three ways to execute your application:
 - Open the `Application` class and locate the `main` method of your program. All Spring Boot program (including web 
 applications) will use a main method as entry point. Consequently, you can debug your program by pointing your debugger 
 to this method before you execute it.
@@ -35,7 +35,7 @@ of rebooting the app.
 - Lastly, if you build your application `mvn package` you will get an executable jar file that can be started from the 
 command line `$ java -jar [your project]-0.0.1-SNAPSHOT.jar`.
 
-Two more files have been generated:
+Your project contains two more files that were generated:
 - Open the `ApplicationTests` file to see what annotations are used to create a Spring Boot integration test. 
 - Open the `application.properties` file. This is the default configuration file of your project. It is currently empty,
 but Spring Boot offers plenty of [configuration properties](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#common-application-properties) 
@@ -47,15 +47,15 @@ but that is beyond the scope of this lab).
 
 First of all, we need to add a suitable _Starter POM_ to our project to get the required dependencies. A Starter POM is 
 a convenient, opinionated, dependency declaration that allows you to easily extend your app with new features including 
-all transitive dependencies. Take a moment to familiarize yourself with the Starter POM listed in the 
+all transitive dependencies. Take a moment to familiarize yourself with the Starter POMs listed in the 
 [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#using-boot-starter-poms). As you may
 have noticed, there is a one-to-one mapping between the available Starter POMs and the `Styles` listed at 
 [Spring Initializr](http://start.spring.io/) page, and if you had selected one or more of them the corresponding Starter
  POM would have been added to the dependencies in the generated pom file.
 
 **Question:** 
-Which Starter POM do you need to add Tomcat, Spring MVC, FasterJackson and other useful dependencies for a web project? 
-Hint, you only need one. 
+- Which Starter POM do you need to add Tomcat, Spring MVC, FasterJackson and other useful dependencies for a web project?
+Add it to your project. Hint, you only need one. 
 
 Create a simple `Greeting` object:
 ```java
@@ -90,16 +90,6 @@ annotations.
 
 - Verify that the response body defaults to JSON.
 - Verify that the request parameter is picked up correctly.
-- _Optional:_ create an integration test for the resource, see http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
-for implementation details and explanation.
-
-
-**Question:**
-How can we make the `content` parameter optional (and default to `Hello World`)?  
-
-_Optional:_ 
-What needs to be changed in order to get an XML payload?  
-
 
 See the _Rest Service guide_ for solution: https://spring.io/guides/gs/rest-service/
 
@@ -120,17 +110,6 @@ for details.
   - http://localhost:8080/env
   - http://localhost:8080/configprops
 
-_Optional:_
-Customize which endpoints that should be enabled, see the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-customizing-endpoints).
-
-
-_Optional:_
-Did you also notice in the log that a series of MBeans where created and exported using the `EndpointMBeanExporter`?
-- Start Visual VM (or jconsole), connect to your app,and see what is provided by the MBeans: 
-```sh
-$ jvisualvm
-```
-
 
 ### Metrics
 
@@ -139,19 +118,8 @@ endpoint.
 
 **Question:**
 - What is the difference between the `counter.status.200.greeting: [nbr]` and `gauge.response.greeting: [nbr]`?
+
 Hint, make another request to http://localhost:8080/greeting and reload the `/metrics` endpoint.
-
-
-_Optional:_ 
-Create your own custom metrics by following the instructions in the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-recording-metrics).
-Implement either a [GaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/GaugeService.html) 
-or create an instance of the [DefaultGaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/writer/DefaultGaugeService.html)
-that can be used to measure snapshot values (e.g. feed it with a random value if you do not come up with anything useful).
-Alternatively, implement a [CounterService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/CounterService.html)
-or instantiate [DefaultCounterService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/writer/DefaultCounterService.html)
-and start counting (implement your own trigger(s) to increment and / or decrement the counter, e.g. by creating a 
-[Scheduled Task](https://spring.io/guides/gs/scheduling-tasks/)).
-- Revisit http://localhost:8080/metrics and observe your metric(s).
 
 
 ### Port configuration
@@ -185,25 +153,6 @@ security.user.password=[your secret password]
 ```
 
 Reboot the application and login again using the new credentials.
-
-_Optional:_ 
-If you added the actuator feature described above, you should be aware of that enabling security also affects the 
-actuator endpoints. 
-- Try accessing http://localhost:8080/metrics (or whatever port number you have configured)
-- You can disable the security checks for the actuator endpoints by configuring `management.security.enabled=false` (I 
-only recommend this alternative if you have configured different ports for the application and the actuator endpoints) 
-- Reboot your app.
-
-_Optional:_ 
-It is not uncommon that you would like another authentication mechanism than basic auth. The [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-guide show you how you can extend the `WebSecurityConfigurerAdapter` to use form based login. The same example also shows 
-you how the GlobalAuthenticationConfigurerAdapter` can be extended to support in memory authentication, giving you an idea 
-how other authentication mechanism can be implemented. Another security example is the [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-guide that shows you how Spring Security can interact with LDAP.                    
-If you have enabled the actuator, it is possible to 
-[configure a specific role](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-sensitive-endpoints) 
-so that only users who have the specific role are authorized to access the actuator endpoints.
-
 
 
 ## Persistence
@@ -251,45 +200,6 @@ public interface GreetingRepository extends PagingAndSortingRepository<Greeting,
 
 - What methods are provided by the interfaces?
 
-_Optional:_ Add a method that returns a list of `Greeting`s matching exact content:
-```java
-List<Greeting> findByContent(String content);
-```
-Behind the scenes, Spring Data will automatically generate an implementation of any `findBy*` method if the corresponding
-entity has a matching accessor method.
- 
-
-_Optional:_ Add a method that returns a list of `Greeting`s matching string contains of content:
-```java
-@Query("SELECT g FROM Greeting g where g.content like %?1%")
-List<Greeting> findByContentContains(String content);
-```
-Create an integration test to verify that your query works:
-```java
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-public class GreetingRepositoryTest {
-
-    @Autowired
-    GreetingRepository repo;
-
-    @Before
-    public void setUp() {
-        repo.deleteAll();
-    }
-
-    @Test
-    public void findsByContentSubString() {
-        Greeting expected = repo.save(new Greeting("This is a string"));
-
-        List<Greeting> actual = repo.findByContentContains("is");
-        assertThat(actual, contains(expected));
-    }
-}
-```
-More information about `@Query` can be found in the [Spring Data JPA reference docs](http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.at-query)
-
-
 
 ### Add a MySQL database for production
 
@@ -320,7 +230,9 @@ Add the following dependency to the pom:
 ```
 
 **Question:**
-Now that we have two databases, which one is used?
+
+- Now that we have two databases, which one is used?
+
 Hint, restart your app and check the log.
 
 By changing some properties, we can configure Spring Boot to connect to MySQL. Open the `application.properties` and add
@@ -334,23 +246,13 @@ spring.datasource.password=
 spring.datasource.driverClassName=com.mysql.jdbc.Driver
 ```
 
-Add the MySQL connector to your list of dependencies:
-
-```xml
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <!-- no version required -->
-</dependency>
-```
-
 If you restart your app, you will find that it connects to MySQL, but an exception is thrown:
 
 ```sh
 MySQLSyntaxErrorException: Table 'test.greeting' doesn't exist
 ```
 To overcome this issue, Spring Boot provides [database initialization](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#howto-intialize-a-database-using-spring-jdbc)
-By convention, a file named `schema.sql` that is located in the classpath root will be executed. By adding the persistence
+By covention, a file named `schema.sql` that is located in the classpath root will be executed. By adding the persistence
 platform to the file name, e.g. `schema-${platform}.sql` the file will only be executed by for that platform. 
 
 - Create a new file called `schema-mysql.sql` in the project `/resource` folder.
@@ -364,13 +266,12 @@ CREATE TABLE IF NOT EXISTS Greeting (
 - Restart the app.
 
 
-
 ### Health Check
 
 The actuator also provide a health check endpoint, intended to be used by load balancers and similar tools.
 - Start the application using MySQL for persistence.
 - Goto http://localhost:8080/health (or to whatever port you have configured the `management.port` to).
-- Stop MySQL
+- Stop MySQL:
 ```sh
 $ mysql.server stop
 Shutting down MySQL
@@ -378,9 +279,11 @@ Shutting down MySQL
 ```
 - Reload http://localhost:8080/health
 
+Spring Boot provides other health checks for several different backends such as Mongo, Redis, Rabbit, etc, if you are 
+using the actuator together with the corresponding starter pom.
 
 
-### Profiles
+## Profiles
 
 Now we have two databases, but we currently only use MySQL. What we would like is two create two [profiles](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#boot-features-profiles),
 one `test` profile that uses HSQLDB, and one `prod` profile that uses MySQL. Since it is only properties that differs, we 
@@ -396,10 +299,10 @@ spring.datasource.username=
 spring.datasource.password=
 spring.datasource.driverCassName=com.mysql.jdbc.Driver
 ```
-- _Optional:_ Create a new `application-test.properties` file in your `/resources` folder that is left empty
 
 **Question:**
-Which database is used when you restart the application?
+
+- Which database is used when you restart the application?
 
 IMHO, it is better to make the production configuration the default configuration, and add any overrides in test or stage
 environment, because the consequences of making a mistake is much greater.
@@ -427,19 +330,124 @@ annotation.
 ```
 
 
-_Optional:_ 
-I do not recommend that JPA is used for SQL schema generation as it makes migrations cumbersome. Using the `schema.sql` 
-approach is better, but for production I recommend using a tool such as Flyway or Liquibase from day one, see the 
-[reference guide](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#howto-use-a-higher-level-database-migration-tool) 
-Implement a migration based on the [Flyway sample](http://github.com/spring-projects/spring-boot/tree/v1.1.5.RELEASE/spring-boot-samples/spring-boot-sample-flyway) 
-or the [Liquibase sample](http://github.com/spring-projects/spring-boot/tree/v1.1.5.RELEASE/spring-boot-samples/spring-boot-sample-liquibase). 
+## Optional
 
+If you have reached this far, you can continue by experiment on your own, do a guide a https://spring.io/guides/ or 
+investigate further in the problems that you have already solved by answering the questions below (pick the one(s) that
+you find interesting).
 
-_Optional:_ 
+## Web
+
+- How can we make the `content` request parameter optional (and default to `Hello World`)?  
+
 - `@Autowire` the `GreetingRepository` in the `GreetingController`. 
-- Create and map the following resources to the repo:
+- Create and map the following resources to the repository:
   - Return all `Greeting`s from the `/greetings` resource.
   - Post a new `Greeting` to the `/greetings` resource.  
   - Fetch a single `Greeting` from the `/greetings/{id}` resource.
-  
+
 Hints: use the `@PathVariable` and the `@RequestMapping` annotations.
+
+- Create an integration test for the `GreetingController`, see http://www.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
+for implementation details and explanation.
+
+- What needs to be changed in order to get an XML response when the performing a request to the `GreetingController`?  
+
+
+## Actuator
+
+- Did you notice in the log that a series of MBeans where created and exported using the `EndpointMBeanExporter` when you 
+enabled the actuator? Start Visual VM (or jconsole), connect to your app,and see what is provided by the MBeans: 
+```sh
+$ jvisualvm
+```
+- Create your own custom metrics by following the instructions in the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-recording-metrics).
+Implement either a [GaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/GaugeService.html) 
+or create an instance of the [DefaultGaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/writer/DefaultGaugeService.html)
+that can be used to measure snapshot values (e.g. feed it with a random value if you do not come up with anything useful).
+Alternatively, implement a [CounterService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/CounterService.html)
+or instantiate [DefaultCounterService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/writer/DefaultCounterService.html)
+and start counting (implement your own trigger(s) to increment and / or decrement the counter, e.g. by creating a 
+[Scheduled Task](https://spring.io/guides/gs/scheduling-tasks/)).
+  - Revisit http://localhost:8080/metrics and observe your metric(s).
+- The actuator exposes several endpoints. Customize which endpoints that should be enabled, see the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-customizing-endpoints).
+Verify your result.
+
+
+## Security
+
+- If you added the actuator feature described above, you should be aware of that enabling security also affects the 
+actuator endpoints when the security Starter POM was added 
+  - Try accessing http://localhost:8080/metrics (or whatever port number you have configured)
+  - You can disable the security checks for the actuator endpoints by configuring `management.security.enabled=false` (I 
+only recommend this alternative if you have configured different ports for the application and the actuator endpoints) 
+- Reboot your app.
+
+**Change authentication** 
+
+It is not uncommon that you would like another authentication mechanism than basic auth. The [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
+guide show you how you can extend the `WebSecurityConfigurerAdapter` to use form based login. The same example also shows 
+you how the GlobalAuthenticationConfigurerAdapter` can be extended to support in memory authentication, giving you an idea 
+how other authentication mechanism can be implemented. Another security example is the [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
+guide that shows you how Spring Security can interact with LDAP.                    
+If you have enabled the actuator, it is possible to 
+[configure a specific role](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-sensitive-endpoints) 
+so that only users who have the specific role are authorized to access the actuator endpoints.
+
+
+
+## Spring Data
+
+**Derived query method**
+
+- Add a method that returns a list of `Greeting`s matching exact content:
+```java
+List<Greeting> findByContent(String content);
+```
+
+Behind the scenes, Spring Data will automatically generate an implementation of any `findBy*` method if the corresponding
+entity has a matching accessor method, i.e. you do not have to implement the method.
+- Verify that it works as expected.
+ 
+
+**Custom query implementation**
+
+- Add a method that returns a list of `Greeting`s matching "string contains" of the `content` column:
+```java
+@Query("SELECT g FROM Greeting g where g.content like %?1%")
+List<Greeting> findByContentContains(String content);
+```
+- Create an integration test to verify that your query works:
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+public class GreetingRepositoryTest {
+
+    @Autowired
+    GreetingRepository repo;
+
+    @Before
+    public void setUp() {
+        repo.deleteAll();
+    }
+
+    @Test
+    public void findsByContentSubString( {
+        Greeting expected = repo.save(new Greeting("This is a string"));
+
+        List<Greeting> actual = repo.findByContentContains("is");
+        assertThat(actual, contains(expected));
+    }
+}
+```
+More information about `@Query` can be found in the [Spring Data JPA reference docs](http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.at-query).
+
+
+## SQL schema migration
+
+I do not recommend that JPA is used for SQL schema generation as it makes migrations cumbersome. Using the `schema.sql` 
+approach is better, but for production a tool such as Flyway or Liquibase is preferred, see the 
+[reference guide](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#howto-use-a-higher-level-database-migration-tool).
+- Implement migration based on the [Flyway sample](http://github.com/spring-projects/spring-boot/tree/v1.1.5.RELEASE/spring-boot-samples/spring-boot-sample-flyway) 
+or the [Liquibase sample](http://github.com/spring-projects/spring-boot/tree/v1.1.5.RELEASE/spring-boot-samples/spring-boot-sample-liquibase). 
+
