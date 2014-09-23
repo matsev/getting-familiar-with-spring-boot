@@ -29,9 +29,7 @@ There are (at least) three ways to execute your application:
 - Open the `Application` class and locate the `main` method of your program. All Spring Boot program (including web 
 applications) will use a main method as entry point. Consequently, you can debug your program by pointing your debugger 
 to this method before you execute it.
-- There is also a Maven plugin (`mvn spring-boot:run`) that can start your application. The Maven plugin is useful if 
-you are working with a webapp and change static assets, it will it will be automatically be picked up without the need 
-of rebooting the app.
+- There is also a Maven plugin (`mvn spring-boot:run`) that can start your application.
 - Lastly, if you build your application `mvn package` you will get an executable jar file that can be started from the 
 command line `$ java -jar [your project]-0.0.1-SNAPSHOT.jar`.
 
@@ -216,7 +214,7 @@ mysql  Ver 14.14 Distrib 5.6.20, for osx10.9 (x86_64) using  EditLine wrapper
 Start the MySQL server:
 ```
 $ mysql.server start
-Sarting MySQL
+Starting MySQL
  SUCCESS!
 ```
 
@@ -270,14 +268,14 @@ CREATE TABLE IF NOT EXISTS Greeting (
 
 The actuator also provide a health check endpoint, intended to be used by load balancers and similar tools.
 - Start the application using MySQL for persistence.
-- Goto http://localhost:8080/health (or to whatever port you have configured the `management.port` to).
+- Goto http://localhost:8080/health (or to whatever port you have configured the `management.port` to). What is the status code?
 - Stop MySQL:
 ```sh
 $ mysql.server stop
 Shutting down MySQL
 .... SUCCESS!
 ```
-- Reload http://localhost:8080/health
+- Reload http://localhost:8080/health What is the status code? 
 
 Spring Boot provides other health checks for several different backends such as Mongo, Redis, Rabbit, etc, if you are 
 using the actuator together with the corresponding starter pom.
@@ -330,11 +328,10 @@ annotation.
 ```
 
 
-## Optional
+# Optional
 
 If you have reached this far, you can continue by experiment on your own, do a guide a https://spring.io/guides/ or 
-investigate further in the problems that you have already solved by answering the questions below (pick the one(s) that
-you find interesting).
+investigate further in the problems that you have already solved by answering the questions below, pick the one(s) that you find interesting.
 
 ## Web
 
