@@ -358,6 +358,7 @@ enabled the actuator? Start Visual VM (or jconsole), connect to your app,and see
 ```sh
 $ jvisualvm
 ```
+- Spring Boot is prepared for integration with Coda Hale Metrics. Follow the (brief) instructions in the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/html/production-ready-metrics.html#production-ready-code-hale-metrics) to see how it is done.
 - Create your own custom metrics by following the instructions in the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-recording-metrics).
 Implement either a [GaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/GaugeService.html) 
 or create an instance of the [DefaultGaugeService](http://docs.spring.io/spring-boot/docs/1.1.x/api/org/springframework/boot/actuate/metrics/writer/DefaultGaugeService.html)
