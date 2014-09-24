@@ -368,6 +368,7 @@ or instantiate [DefaultCounterService](http://docs.spring.io/spring-boot/docs/1.
 and start counting (implement your own trigger(s) to increment and / or decrement the counter, e.g. by creating a 
 [Scheduled Task](https://spring.io/guides/gs/scheduling-tasks/)).
   - Revisit http://localhost:8080/metrics and observe your metric(s).
+- Make a few requests to different endpoints. What is the puspose of the http://localhost:8080/trace endpoint?
 - The actuator exposes several endpoints. Customize which endpoints that should be enabled, see the [reference docs](http://docs.spring.io/spring-boot/docs/1.1.x/reference/htmlsingle/#production-ready-customizing-endpoints).
 Verify your result.
 
